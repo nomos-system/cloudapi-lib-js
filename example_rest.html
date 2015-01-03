@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>nomos Cloud API Example</title>
+<meta charset="utf-8">
+<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+<script src="lib/nomos.cloudapi.js"></script>
+</head>
+
+<body>
+	<div id="wrapper"></div>
+</body>
+
+<script>
+$(document).ready(function() {
+	var cloudRestApi = new nomosCloudRestApi({accessToken: 'ACCESS_TOKEN'});
+	cloudRestApi.executeSystemClassCommand('NXS3E63FF30', 'sys', 'hello', '', function(data) {
+		console.log(data);
+		
+		if(typeof data.result != 'undefined') {
+			$('#wrapper').text('Successfull');
+		}
+		else {
+			$('#wrapper').text('Error: ' + data.status + ' ' + data.statusText);
+		}
+	});
+});
+</script>
+
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>nomos Cloud API Example</title>
+<meta charset="utf-8">
+<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+<script src="https://cdn.socket.io/socket.io-1.2.1.js"></script>
+<script src="lib/nomos.cloudapi.js"></script>
+</head>
+
+<body>
+	<div id="wrapper"></div>
+</body>
+
+<script>
+	$(document).ready(function() {
+		var cloudRealtimeApi = new nomosCloudRealtimeApi({
+			clientId: 'CLIENT_ID', 
+			accessToken: 'ACCESS_TOKEN',
+			onConnect: function() {
+				console.log('connected!');
+				
+				cloudRealtimeApi.emit('getSystem', {sid: 'NXS3E63FF30'}, function(result) {
+					console.log(result);
+				});
+				cloudRealtimeApi.emit('getUser', {}, function(result) {
+					console.log(result);
+				});
+				cloudRealtimeApi.emit('registerListener', {sid: 'NXS3E63FF30', class: 'itunes', value: 'title'}, function(result) {
+					console.log(result);
+				});
+			},
+			onDisconnect: function() {
+				console.log('disconnected!');
+			},
+			onConnectError: function(e) {
+				console.log('connection error', e);
+			},
+			onError: function(e) {
+				console.log('error', e);
+			},
+			onListenerEvent: function(r) {
+				console.log('listener result', r);
+			},
+		});
+	});
+</script>
+
+</html>
