@@ -14,8 +14,15 @@
 <script>
 $(document).ready(function() {
 	var cloudRestApi = new nomosCloudRestApi({accessToken: 'ACCESS_TOKEN'});
-	cloudRestApi.executeSystemClassCommand('NXS3E63FF30', 'sys', 'hello', '', function(data) {
-		console.log(data);
+	
+	// Example #1
+	cloudRestApi.executeRAW('NXS1228393C', {"version":1,"method":"command","class":"SYS","command":[{"name":"HELLO","value":""}]}, function(data) {
+		console.log('Result #1', data);
+	});
+
+	// Example #2
+	cloudRestApi.executeSystemClassCommand('NXS3E63FF30', 'SYS', 'HELLO', '', function(data) {
+		console.log('Result #2', data);
 		
 		if(typeof data.result != 'undefined') {
 			$('#wrapper').text('Successfull');
